@@ -1,0 +1,23 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+requests = "==2.31.0"
+pandas = "==2.0.3"
+datetime = "==5.2"
+pyarrow = "==13.0.0"
+fastparquet = "==2023.10.0"
+pyotp = "==2.9.0"
+fyers-apiv3 = "==3.0.5"
+httpx = "==0.25.0"
+numpy = "==1.24.3"
+dill = "==0.3.7"
+frozendict = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.10"
+python_full_version = "3.10.0"
