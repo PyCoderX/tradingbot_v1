@@ -5,10 +5,9 @@ import pandas as pd
 
 
 class PreMarketAnalysis(TechnicalAnalysis):
-    def __init__(self, FyersClient, index: str):
+    def __init__(self, FyersClient):
         TechnicalAnalysis.__init__(self)
         self.FyersClient = FyersClient
-        self.index = index
 
         funds = self.FyersClient.funds.get("fund_limit")
         self.cash = next(
@@ -17,13 +16,12 @@ class PreMarketAnalysis(TechnicalAnalysis):
             if elem.get("title") == "Total Balance"
         )
 
-    @property
-    def _getSymbols(self):
-        return SymbolList(index=self.index).__call__()
+    def _getSymbols(self, index: str) -> list:
+        return SymbolList(index=index).__call__()
 
-    def _historicalData(self):
+    def _historicalData(self, index: str):
         # get symbol list
-        symbol_list = self._getSymbols
+        symbol_list = self._getSymbols(index)
 
         # Calculate date range for historical data
         end_date = datetime.datetime.now() + datetime.timedelta(days=-1)
@@ -38,8 +36,8 @@ class PreMarketAnalysis(TechnicalAnalysis):
         del data
         return [self.FyersClient.history_daily(data) for data in input_data]
 
-    def get_watchlist(self):
-        hist_data = self._historicalData()
+    def get_watchlist(self, index: str):
+        hist_data = self._historicalData(index)
         symbol_pivot = [
             self.calculate_fibonacci_pivots(data, self.cash) for data in hist_data
         ]
