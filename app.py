@@ -16,6 +16,11 @@ import pandas as pd
 import instances
 
 from premarket import PreMarketAnalysis
+from fyersDataSocket import DataSocket
+from dataProcessor import DataProcessor
+
+import queue
+import threading
 
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 # initiate telegram and FyersClient
@@ -56,6 +61,32 @@ if is_offDay:
         time.sleep(10)
 
 else:
-    PMA = PreMarketAnalysis(FyersClient, index="nifty 50")
-    df = PMA.get_watchlist()
+    PMA = PreMarketAnalysis(FyersClient)
+    df = PMA.get_watchlist(index="nifty 100")
     symbol_info = df.set_index("Symbol").to_dict(orient="index")
+
+    symbols_to_watch = list(symbol_info.keys())
+    # symbols_to_watch
+
+    token = f"{FyersClient.client_id}:{FyersClient.access_token}"
+    data_queue = queue.Queue()
+    ds = DataSocket(access_token=token, symbols=symbols_to_watch, data_queue=data_queue)
+    data_thread = threading.Thread(target=ds, daemon=True)
+    data_thread.start()
+
+    data_processed_queue = queue.Queue()
+    dp = DataProcessor(
+        data_queue=data_queue, data_forward_queue=data_processed_queue, log_path=log_dir
+    )
+
+    data_processor_thread = dp()
+    data_processor_thread.start()
+
+    while True:
+        try:
+            msg = data_queue.get()
+            print(msg)
+        except queue.Empty:
+            pass
+        except Exception as e:
+            print(e)
