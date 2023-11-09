@@ -2,7 +2,6 @@ from technicalanalysis import TechnicalAnalysis
 from symbollist import SymbolList
 import datetime
 import pandas as pd
-from functools import lru_cache
 import concurrent.futures
 
 
@@ -59,10 +58,8 @@ class PreMarketAnalysis(TechnicalAnalysis):
         input_data = [data | {"symbol": symbol} for symbol in symbol_list]
         del data
 
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            return list(executor.map(self.FyersClient.history_daily, input_data))
+        return [self.FyersClient.history_daily(data) for data in input_data]
 
-    @lru_cache(maxsize=100)
     def get_watchlist(self, index: str):
         """Get the watchlist for the given index.
 
