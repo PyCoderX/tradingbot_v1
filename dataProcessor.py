@@ -51,26 +51,18 @@ class DataProcessor:
         if message.get("ltp"):
             postData = pd.DataFrame.from_dict(message, orient="index").T
             os.makedirs(self.root, exist_ok=True)  # Create the log directory
-            parquet_path = f"{self.root}/realData.parquet.gzip"
-            if os.path.exists(parquet_path):
-                preData = pd.read_parquet(parquet_path)
+            fpath = f"{self.root}/realtimeData.csv"
+            if os.path.exists(fpath):
+                preData = pd.read_csv(fpath)
                 data = pd.concat([preData, postData], axis=0)
-                data.to_parquet(
-                    parquet_path,
-                    compression="gzip",
-                    index=None,
-                )
+                data.to_csv(fpath)
 
                 # Acquire the lock before making changes to ensure thread safety
                 with self.lock:
                     self.data_forward.put(data)
 
             else:
-                postData.to_parquet(
-                    parquet_path,
-                    compression="gzip",
-                    index=None,
-                )
+                postData.to_csv(fpath)
 
                 with self.lock:
                     self.data_forward.put(postData)
@@ -82,7 +74,7 @@ class DataProcessor:
         Continuously processes data messages from the input queue and forwards them to the output queue.
         """
         while datetime.datetime.now().time() < self.market_time:
-            with contextlib.suppress(queue.Empty):
+            try:
                 # Non-blocking get from the queue with a timeout of 1 second
                 message = self.data_queue.get(block=False, timeout=1)
                 # print("Received:", datetime.datetime.now())
@@ -90,6 +82,10 @@ class DataProcessor:
                 if message is None:
                     break
                 self.process_data(message)
+            except queue.Empty:
+                pass
+            except Exception as e:
+                print(e)
 
     def __call__(self):
         data_processor_thread = threading.Thread(target=self.process_data_continuous)
