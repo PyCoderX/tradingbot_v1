@@ -11,6 +11,7 @@ class SymbolList:
         # common headers
         headers = {"User-Agent": "Mozilla/5.0"}
         fpath = Path.joinpath(Path.cwd(), "data", "SectorMap.json")
+
         # import stock list from nse website
         with open(fname, "r") as json_file:
             filenames = json.load(json_file)
