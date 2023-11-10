@@ -1,5 +1,6 @@
 import utils
 import json
+from pathlib import Path
 
 
 class SymbolList:
@@ -9,9 +10,9 @@ class SymbolList:
     def getSymbols(self) -> list:
         # common headers
         headers = {"User-Agent": "Mozilla/5.0"}
-
+        fpath = Path.joinpath(Path.cwd(), "data", "SectorMap.json")
         # import stock list from nse website
-        with open("SectorMap.json", "r") as json_file:
+        with open(fname, "r") as json_file:
             filenames = json.load(json_file)
 
         filename = filenames.get(self.index.lower())
