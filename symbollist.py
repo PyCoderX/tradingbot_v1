@@ -13,7 +13,7 @@ class SymbolList:
         fpath = Path.joinpath(Path.cwd(), "data", "SectorMap.json")
 
         # import stock list from nse website
-        with open(fname, "r") as json_file:
+        with open(fpath, "r") as json_file:
             filenames = json.load(json_file)
 
         filename = filenames.get(self.index.lower())
