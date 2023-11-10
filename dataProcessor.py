@@ -51,7 +51,7 @@ class DataProcessor:
         if message.get("ltp"):
             postData = pd.DataFrame.from_dict(message, orient="index").T
             os.makedirs(self.root, exist_ok=True)  # Create the log directory
-            fpath = f"{self.root}/realtimeData.csv"
+            fpath = f"{self.root}/{datetime.datetime.now():%d-%b-%Y}_realtimeData.csv"
             if os.path.exists(fpath):
                 postData.to_csv(fpath, index=False, mode="a", header=False)
 
