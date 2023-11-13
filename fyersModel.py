@@ -143,7 +143,7 @@ class FyersModel:
             The response JSON as a dictionary.
         """
         id_list = data.get("id").split(",")
-        response = self.orderbook()
+        response = self.orderbook
         response["orderBook"] = [
             order for order in response["orderBook"] if order["id"] in id_list
         ]
@@ -427,7 +427,7 @@ class FyersModel:
         day_difference = (data.get("range_to") - data.get("range_from")).days
 
         # allowed date deference || 365 days for daily timeframe and 100 days for other timeframe
-        allowed_day_difference = {"D": 365}.get(data.get("resolution", 100))
+        allowed_day_difference = {"D": 365}.get(data.get("resolution"), 100)
 
         interval = day_difference // allowed_day_difference
         current_date = data.get("range_from")
