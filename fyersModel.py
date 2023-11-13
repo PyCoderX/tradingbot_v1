@@ -1,10 +1,11 @@
-import datetime
-from fyers_apiv3 import fyersModel
-import pandas as pd
-import utils
 import concurrent.futures
+import datetime
 import functools
 
+import pandas as pd
+from fyers_apiv3 import fyersModel
+
+import utils
 
 # initiate async rest client
 client = utils.RestClient()
@@ -115,6 +116,7 @@ class FyersModel:
             "params": None,
         }
 
+    @property
     @client.request
     def orderbook(self) -> dict:
         """
