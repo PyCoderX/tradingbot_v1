@@ -1,4 +1,4 @@
-from .cred import FyesrCredentials, GmailCredentials, TelegramCredentials
+from .cred import FyersCredentials, GmailCredentials, TelegramCredentials
 from .utils import (
     AsyncRestClient,
     ExceptionLogger,
