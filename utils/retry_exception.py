@@ -30,10 +30,7 @@ def retry(max_attempts=3, initial_delay=3, backoff_factor=2, do_print: bool = Tr
     def retry_decorator(func):
         @wraps(func)
         def wrapped_function(*args, **kwargs):
-            remaining_attempts, current_delay = (
-                max_attempts,
-                initial_delay,
-            )  # make mutable
+            remaining_attempts, current_delay = max_attempts, initial_delay  # make mutable
 
             while remaining_attempts > 0:
                 try:
@@ -44,15 +41,11 @@ def retry(max_attempts=3, initial_delay=3, backoff_factor=2, do_print: bool = Tr
                     time.sleep(current_delay)  # Wait...
                     current_delay *= backoff_factor  # Make future wait longer
                     if do_print:
-                        print(
-                            f"Error occurred while executing {func.__name__}. \n{error}\nRetrying ..."
-                        )
+                        print(f"Error occurred while executing {func.__name__}. \nRetrying ...")
                     if remaining_attempts <= 0:
                         raise error
 
-            raise Exception(
-                f"Failed to execute {func.__name__} after {max_attempts} attempts. "
-            )
+            raise Exception(f"Failed to execute {func.__name__} after {max_attempts} attempts. ")
 
         return wrapped_function
 

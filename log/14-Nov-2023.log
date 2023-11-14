@@ -1,0 +1,40 @@
+2023-11-14 10:44:58,490 - d:\GitHub\on_github\tradingbot_v1\log\14-Nov-2023.log - ERROR - Exception raised in login. Traceback:
+Traceback (most recent call last):
+  File "d:\GitHub\on_github\tradingbot_v1\src\utils\logger.py", line 100, in wrapper
+    result = func(*args, **kwargs)
+  File "d:\GitHub\on_github\tradingbot_v1\src\utils\retry_exception.py", line 46, in wrapped_function
+    raise error
+  File "d:\GitHub\on_github\tradingbot_v1\src\utils\retry_exception.py", line 37, in wrapped_function
+    result = func(*args, **kwargs)  # First attempt
+  File "d:\GitHub\on_github\tradingbot_v1\src\fyersLogin.py", line 181, in login
+    self._handle_step(step_func, step_name)
+  File "d:\GitHub\on_github\tradingbot_v1\src\fyersLogin.py", line 165, in _handle_step
+    self.sendMessage(f"{step_name} successful: {self.data['message']}")
+  File "d:\GitHub\on_github\tradingbot_v1\src\fyersLogin.py", line 55, in sendMessage
+    self.teleBot.sendMessage(message)
+  File "d:\GitHub\on_github\tradingbot_v1\src\telegram.py", line 45, in sendMessage
+    return self.make_request(lambda: inputs)
+  File "d:\GitHub\on_github\tradingbot_v1\src\telegram.py", line 22, in make_request
+    logger = utils.ExceptionLogger(
+NameError: name 'utils' is not defined
+
+2023-11-14 10:47:14,672 - d:\GitHub\on_github\tradingbot_v1\log\14-Nov-2023.log - ERROR - Exception raised in login. Traceback:
+Traceback (most recent call last):
+  File "d:\GitHub\on_github\tradingbot_v1\src\utils\logger.py", line 100, in wrapper
+    result = func(*args, **kwargs)
+  File "d:\GitHub\on_github\tradingbot_v1\src\utils\retry_exception.py", line 51, in wrapped_function
+    raise error
+  File "d:\GitHub\on_github\tradingbot_v1\src\utils\retry_exception.py", line 40, in wrapped_function
+    result = func(*args, **kwargs)  # First attempt
+  File "d:\GitHub\on_github\tradingbot_v1\src\fyersLogin.py", line 181, in login
+    self._handle_step(step_func, step_name)
+  File "d:\GitHub\on_github\tradingbot_v1\src\fyersLogin.py", line 165, in _handle_step
+    self.sendMessage(f"{step_name} successful: {self.data['message']}")
+  File "d:\GitHub\on_github\tradingbot_v1\src\fyersLogin.py", line 55, in sendMessage
+    self.teleBot.sendMessage(message)
+  File "d:\GitHub\on_github\tradingbot_v1\src\telegram.py", line 45, in sendMessage
+    return self.make_request(lambda: inputs)
+  File "d:\GitHub\on_github\tradingbot_v1\src\telegram.py", line 22, in make_request
+    logger = utils.ExceptionLogger(
+NameError: name 'utils' is not defined
+
