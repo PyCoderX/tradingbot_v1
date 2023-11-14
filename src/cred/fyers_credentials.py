@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 
 
 @dataclass(frozen=True)
-class FyesrCredentials:
+class FyersCredentials:
     app_id: str = field(repr=False, default=os.environ.get("fyers_app_id"))
     app_type: str = field(repr=False, default=os.environ.get("fyers_app_type"))
     secret_key: str = field(repr=False, default=os.environ.get("fyers_secret_key"))
