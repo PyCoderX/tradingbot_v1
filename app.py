@@ -123,8 +123,7 @@ while datetime.datetime.now().time() < market_close_time:
         real_time_data = real_time_data.sort_values(by="time")
 
         # * get the orderbook
-        OrderBook = pd.DataFrame.from_records(FyersClient.orderbook())
-        
+        OrderBook = pd.DataFrame.from_records(FyersClient.orderbook)
 
         for symbol in symbols_to_watch:
             symbol_real_time_data = real_time_data[real_time_data.symbol == symbol].copy()

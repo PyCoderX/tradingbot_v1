@@ -56,9 +56,9 @@ class DataProcessor:
                 postData.to_csv(fpath, index=False, mode="a", header=False)
 
                 # Acquire the lock before making changes to ensure thread safety
-                # with self.lock:
-                #     data = pd.read_csv(fpath)
-                #     self.data_forward.put(data)
+                with self.lock:
+                    data = pd.read_csv(fpath)
+                    self.data_forward.put(data)
 
             else:
                 postData.to_csv(fpath, index=False)

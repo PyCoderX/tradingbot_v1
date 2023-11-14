@@ -64,3 +64,5 @@ if __name__ == "__main__":
     teleBot, FyersClient = instances.get_instance(logdir=log_dir)
     # * get the value curve and copy to clipboard
     copy_value_curve(FyersClient)
+
+

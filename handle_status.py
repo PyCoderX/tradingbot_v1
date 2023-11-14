@@ -1,6 +1,4 @@
 import datetime
-import symbol
-
 import pandas as pd
 import requests
 

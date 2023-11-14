@@ -1,11 +1,13 @@
 from fyers_apiv3.FyersWebsocket import data_ws
+from pathlib import Path
 
 
 class DataSocket:
-    def __init__(self, access_token, symbols, data_queue):
+    def __init__(self, access_token, symbols, data_queue, log_path: str | Path = ""):
         self.access_token = access_token
         self.symbols = symbols
         self.data_queue = data_queue
+        self.log_path = log_path
 
     def onmessage(self, message):
         """
@@ -55,10 +57,12 @@ class DataSocket:
         self.fyers.unsubscribe(symbols=self.symbols, data_type=self.data_type)
 
     def __call__(self):
+        if self.log_path != "":
+            Path.mkdir(self.log_path, exist_ok=True)
         # Create a FyersDataSocket instance with the provided parameters
         self.fyers = data_ws.FyersDataSocket(
             access_token=self.access_token,  # Access token in the format "appid:accesstoken"
-            log_path="",  # Path to save logs. Leave empty to auto-create logs in the current directory.
+            log_path=self.log_path,  # Path to save logs. Leave empty to auto-create logs in the current directory.
             litemode=False,  # Lite mode disabled. Set to True if you want a lite response.
             write_to_file=False,  # Save response in a log file instead of printing it.
             reconnect=True,  # Enable auto-reconnection to WebSocket on disconnection.
