@@ -1,9 +1,0 @@
-
-*.pyc
-*.log
-*.pickle
-old_files/
-*.csv
-*.txt
-*.ipynb
-*.gzip
