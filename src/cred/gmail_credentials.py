@@ -1,8 +1,8 @@
 import os
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 
-@dataclass
+@dataclass(frozen=True)
 class GmailCredentials:
-    gmail_username = os.environ.get("gmail_username")
-    gmail_password = os.environ.get("gmail_password")
+    gmail_username: str = field(default=os.environ.get("gmail_username"), repr=False)
+    gmail_password: str = field(default=os.environ.get("gmail_password"), repr=False)
