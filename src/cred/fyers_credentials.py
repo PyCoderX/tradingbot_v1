@@ -1,13 +1,15 @@
 import os
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 
-@dataclass
+@dataclass(frozen=True)
 class FyesrCredentials:
-    app_id: str = os.environ.get("fyers_app_id")
-    app_type: str = os.environ.get("fyers_app_type")
-    secret_key: str = os.environ.get("fyers_secret_key")
-    fyers_id: str = os.environ.get("fyers_id")
-    totp_key: str = os.environ.get("fyers_totp_key")
-    userpin: str = str(os.environ.get("fyers_userpin"))
-    redirect_uri: str = "https://trade.fyers.in/api-login/redirect-uri/index.html"
+    app_id: str = field(repr=False, default=os.environ.get("fyers_app_id"))
+    app_type: str = field(repr=False, default=os.environ.get("fyers_app_type"))
+    secret_key: str = field(repr=False, default=os.environ.get("fyers_secret_key"))
+    fyers_id: str = field(repr=False, default=os.environ.get("fyers_id"))
+    totp_key: str = field(repr=False, default=os.environ.get("fyers_totp_key"))
+    userpin: str = field(repr=False, default=str(os.environ.get("fyers_userpin")))
+    redirect_uri: str = field(
+        repr=False, default="https://trade.fyers.in/api-login/redirect-uri/index.html"
+    )
