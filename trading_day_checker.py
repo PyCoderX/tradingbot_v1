@@ -15,8 +15,6 @@ from utils import retry
 
 @dataclass
 class TradingDayChecker:
-    log_dir: str
-    data_dir: str
     teleBot: Any
 
     @retry(max_attempts=5, initial_delay=3, backoff_factor=5)
@@ -41,4 +39,3 @@ class TradingDayChecker:
                 time.sleep(120)
                 os.system("shutdown -h now")
                 time.sleep(120)
-        
