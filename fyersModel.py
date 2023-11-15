@@ -233,7 +233,7 @@ class FyersModel:
             "method": "POST",
             "headers": self.headers,
             "url": f"{Config.API}{Config.orders_endpoint}",
-            "data": data,
+            "json": data,
         }
 
     @client.request
