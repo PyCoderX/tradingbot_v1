@@ -1,6 +1,7 @@
 import concurrent.futures
 import datetime
 import functools
+import json
 
 import pandas as pd
 from fyers_apiv3 import fyersModel
@@ -203,7 +204,7 @@ class FyersModel:
             "method": "DELETE",
             "headers": self.headers,
             "url": f"{Config.API}{Config.orders_endpoint}",
-            "params": data,
+            "json": data,
         }
 
     @client.request
@@ -255,7 +256,7 @@ class FyersModel:
             "method": "PATCH",
             "headers": self.headers,
             "url": f"{Config.API}{Config.orders_endpoint}",
-            "data": data,
+            "json": data,
         }
 
     @client.request
