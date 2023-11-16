@@ -352,7 +352,7 @@ class FyersModel:
             "method": "PATCH",
             "headers": self.headers,
             "url": f"{Config.API}{Config.multi_orders}",
-            "data": data,
+            "json": data,
         }
 
     @utils.retry(max_attempts=5, initial_delay=2, backoff_factor=2, do_print=False)
