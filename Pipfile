@@ -6,6 +6,9 @@ name = "pypi"
 [packages]
 ipykernel = "*"
 pandas = "*"
+plotly = "*"
+scipy = "*"
+nbformat = "*"
 
 [dev-packages]
 
