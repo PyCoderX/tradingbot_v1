@@ -1,6 +1,8 @@
-from pathlib import Path
 import datetime
+from pathlib import Path
+
 import dill
+
 import fyersLogin
 import telegram
 
@@ -38,8 +40,13 @@ def get_instance(logdir: Path):
     if not is_current(fyers_fname):
         # initiate fyers login instance
         fyers = fyersLogin.FyersLogin(log_path=logdir, teleBot=telegramBot).__call__()
-        with open(fyers_fname, "wb") as file:
-            dill.dump(fyers, file, byref=False, recurse=True)
+        try:
+            telegramBot.sendMessage(fyers.funds)
+            with open(fyers_fname, "wb") as file:
+                dill.dump(fyers, file, byref=False, recurse=True)
+        except Exception as e:
+            telegramBot.sendMessage("Failed to initiate FyersClient")
+            raise e
     else:
         # Export fyers instance
         with open(fyers_fname, "rb") as file:
